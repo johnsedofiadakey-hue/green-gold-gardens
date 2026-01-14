@@ -2,23 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 1. FORCE EVERYTHING GREEN */
+/* 1. FORCE EVERYTHING GREEN (WEB VIEW) */
 html, body, #root {
   margin: 0;
   padding: 0;
   width: 100%;
   min-height: 100vh;
-  /* This creates a solid green base layer behind your transparent navbar */
   background-color: #022c22 !important; 
   color: #f8fafc;
 }
 
-/* 2. PREVENT SCROLL BOUNCE (Showing white at top) */
+/* 2. PREVENT SCROLL BOUNCE */
 html {
   overscroll-behavior-y: none;
 }
 
-/* 3. YOUR SCROLLBAR */
+/* 3. CUSTOM SCROLLBAR */
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -29,4 +28,59 @@ html {
   background-color: #059669;
   border-radius: 6px;
   border: 3px solid #022c22;
+}
+
+/* 4. PROFESSIONAL PRINT ENGINE (INVOICE & RECEIPTS) */
+@media print {
+  /* Hide UI clutter: Navbar, Footer, Buttons, Chat, and Admin Sidebar */
+  nav, footer, button, .chat-bot, .no-print, aside, .admin-controls {
+    display: none !important;
+  }
+
+  /* Reset background for high-quality paper printing */
+  html, body, #root {
+    background-color: white !important;
+    color: black !important;
+    min-height: auto !important;
+  }
+
+  /* Professional Typography for Invoice */
+  .invoice-container {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 40px;
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Ensure tables look crisp on paper */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  th {
+    background-color: #f3f4f6 !important; /* Light grey header */
+    color: black !important;
+    border-bottom: 2px solid #374151;
+    text-align: left;
+    padding: 8px;
+  }
+
+  td {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 8px;
+  }
+
+  /* Remove any forced dark gradients from the print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
 }
