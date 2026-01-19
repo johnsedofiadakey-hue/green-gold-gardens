@@ -16,7 +16,7 @@ import PayrollSystem from './PayrollSystem';
 
 const logoImage = "/logo.jpg"; 
 
-// --- PRINT & STYLE ENGINE ---
+// --- PRINT & STYLE ENGINE (WITH CONTRAST FIXES) ---
 const PrintStyles = () => (
   <style>{`
     @media print {
@@ -37,6 +37,18 @@ const PrintStyles = () => (
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     }
     
+    /* GLOBAL CONTRAST OVERRIDE FOR SELECT DROPDOWNS */
+    select {
+      background-color: white !important;
+      color: #111827 !important; /* Dark Gray 900 */
+    }
+    
+    select option {
+      background-color: white !important;
+      color: #111827 !important;
+      padding: 10px;
+    }
+
     .modal-scroll::-webkit-scrollbar { width: 8px; }
     .modal-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
     .modal-scroll::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
@@ -64,7 +76,7 @@ const SearchableSelect = ({ options, value, onChange, onSelect, placeholder, lab
         <Search className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
         <input 
           type="text" placeholder={placeholder} 
-          className="w-full pl-10 p-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all shadow-sm font-medium" 
+          className="w-full pl-10 p-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all shadow-sm font-medium" 
           value={value} onChange={(e) => { onChange(e.target.value); setIsOpen(true); }} onFocus={() => setIsOpen(true)} 
         />
       </div>
@@ -97,27 +109,27 @@ const SettingsManager = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto bg-white p-8 rounded-3xl shadow-sm border border-gray-100 animate-fade-in">
+        <div className="max-w-4xl mx-auto bg-white p-8 rounded-3xl shadow-sm border border-gray-100 animate-fade-in text-gray-900">
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 text-gray-800"><Settings className="w-6 h-6"/> System Configuration</h2>
             <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-4">
                     <h3 className="font-bold text-gray-500 uppercase text-xs tracking-wider border-b pb-2">Company Details (Invoice Header)</h3>
-                    <div><label className="text-xs font-bold text-gray-600">Company Name</label><input className="w-full p-3 border rounded-lg bg-gray-50" value={settings.companyName} onChange={e=>setSettings({...settings, companyName:e.target.value})}/></div>
-                    <div><label className="text-xs font-bold text-gray-600">Address</label><input className="w-full p-3 border rounded-lg bg-gray-50" value={settings.companyAddress} onChange={e=>setSettings({...settings, companyAddress:e.target.value})}/></div>
+                    <div><label className="text-xs font-bold text-gray-600">Company Name</label><input className="w-full p-3 border rounded-lg bg-gray-50 text-gray-900" value={settings.companyName} onChange={e=>setSettings({...settings, companyName:e.target.value})}/></div>
+                    <div><label className="text-xs font-bold text-gray-600">Address</label><input className="w-full p-3 border rounded-lg bg-gray-50 text-gray-900" value={settings.companyAddress} onChange={e=>setSettings({...settings, companyAddress:e.target.value})}/></div>
                     <div className="grid grid-cols-2 gap-2">
-                        <div><label className="text-xs font-bold text-gray-600">Phone</label><input className="w-full p-3 border rounded-lg bg-gray-50" value={settings.companyPhone} onChange={e=>setSettings({...settings, companyPhone:e.target.value})}/></div>
-                        <div><label className="text-xs font-bold text-gray-600">Email</label><input className="w-full p-3 border rounded-lg bg-gray-50" value={settings.companyEmail} onChange={e=>setSettings({...settings, companyEmail:e.target.value})}/></div>
+                        <div><label className="text-xs font-bold text-gray-600">Phone</label><input className="w-full p-3 border rounded-lg bg-gray-50 text-gray-900" value={settings.companyPhone} onChange={e=>setSettings({...settings, companyPhone:e.target.value})}/></div>
+                        <div><label className="text-xs font-bold text-gray-600">Email</label><input className="w-full p-3 border rounded-lg bg-gray-50 text-gray-900" value={settings.companyEmail} onChange={e=>setSettings({...settings, companyEmail:e.target.value})}/></div>
                     </div>
                 </div>
                 <div className="space-y-4">
                     <h3 className="font-bold text-gray-500 uppercase text-xs tracking-wider border-b pb-2">Financial Defaults & Terms</h3>
                     <div className="grid grid-cols-2 gap-2">
-                        <div><label className="text-xs font-bold text-gray-600">Def. Tax Name</label><input className="w-full p-3 border rounded-lg bg-gray-50" value={settings.taxName} onChange={e=>setSettings({...settings, taxName:e.target.value})}/></div>
-                        <div><label className="text-xs font-bold text-gray-600">Def. Tax %</label><input type="number" className="w-full p-3 border rounded-lg bg-gray-50" value={settings.taxRate} onChange={e=>setSettings({...settings, taxRate:e.target.value})}/></div>
+                        <div><label className="text-xs font-bold text-gray-600">Def. Tax Name</label><input className="w-full p-3 border rounded-lg bg-gray-50 text-gray-900" value={settings.taxName} onChange={e=>setSettings({...settings, taxName:e.target.value})}/></div>
+                        <div><label className="text-xs font-bold text-gray-600">Def. Tax %</label><input type="number" className="w-full p-3 border rounded-lg bg-gray-50 text-gray-900" value={settings.taxRate} onChange={e=>setSettings({...settings, taxRate:e.target.value})}/></div>
                     </div>
-                    <div><label className="text-xs font-bold text-gray-600">Bank Name</label><input className="w-full p-3 border rounded-lg bg-gray-50" value={settings.bankName} onChange={e=>setSettings({...settings, bankName:e.target.value})}/></div>
-                    <div><label className="text-xs font-bold text-gray-600">Account Number</label><input className="w-full p-3 border rounded-lg bg-gray-50" value={settings.bankAccount} onChange={e=>setSettings({...settings, bankAccount:e.target.value})}/></div>
-                    <div><label className="text-xs font-bold text-gray-600">Terms & Conditions</label><textarea className="w-full p-3 border rounded-lg bg-gray-50 h-20" value={settings.paymentTerms} onChange={e=>setSettings({...settings, paymentTerms:e.target.value})}/></div>
+                    <div><label className="text-xs font-bold text-gray-600">Bank Name</label><input className="w-full p-3 border rounded-lg bg-gray-50 text-gray-900" value={settings.bankName} onChange={e=>setSettings({...settings, bankName:e.target.value})}/></div>
+                    <div><label className="text-xs font-bold text-gray-600">Account Number</label><input className="w-full p-3 border rounded-lg bg-gray-50 text-gray-900" value={settings.bankAccount} onChange={e=>setSettings({...settings, bankAccount:e.target.value})}/></div>
+                    <div><label className="text-xs font-bold text-gray-600">Terms & Conditions</label><textarea className="w-full p-3 border rounded-lg bg-gray-50 h-20 text-gray-900" value={settings.paymentTerms} onChange={e=>setSettings({...settings, paymentTerms:e.target.value})}/></div>
                 </div>
             </div>
             <button onClick={save} className="w-full mt-8 bg-emerald-900 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-emerald-800 transition-all flex justify-center items-center gap-2"><Save className="w-5 h-5"/> Save All Settings</button>
@@ -130,7 +142,7 @@ const SalesNotificationCenter = ({ transactions, customers, onProcessOrder }) =>
     const webOrders = transactions.filter(t => t.isWebOrder === true && t.processed !== true);
 
     return (
-        <div className="space-y-6 animate-fade-in">
+        <div className="space-y-6 animate-fade-in text-gray-900">
              <div className="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-blue-500 flex justify-between items-center">
                 <div>
                     <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2"><Globe className="w-6 h-6 text-blue-500"/> Web Order Inbox</h2>
@@ -199,7 +211,7 @@ const SalesNotificationCenter = ({ transactions, customers, onProcessOrder }) =>
     );
 };
 
-// --- GLOBAL TRANSACTION EDITOR ---
+// --- GLOBAL TRANSACTION EDITOR (CONTRAST FIX APPLIED) ---
 const EditGeneralTransactionModal = ({ transaction, onClose, onSave }) => {
     const [formData, setFormData] = useState({ ...transaction });
     const expenseCategories = ["Operational Expenses", "Utilities", "Fines", "Property", "Transportation", "Food & Water", "Salaries", "Maintenance", "Marketing", "Restocking", "Other"];
@@ -223,7 +235,7 @@ const EditGeneralTransactionModal = ({ transaction, onClose, onSave }) => {
                 <div className="space-y-4">
                     <div>
                         <label className="text-[10px] font-bold text-gray-400 uppercase mb-1">Description</label>
-                        <input className="w-full p-3 border rounded-xl bg-gray-50 focus:bg-white" value={formData.desc} onChange={e=>setFormData({...formData, desc: e.target.value})} />
+                        <input className="w-full p-3 border rounded-xl bg-gray-50 text-gray-900 focus:bg-white" value={formData.desc} onChange={e=>setFormData({...formData, desc: e.target.value})} />
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
@@ -233,22 +245,29 @@ const EditGeneralTransactionModal = ({ transaction, onClose, onSave }) => {
                         </div>
                         <div>
                             <label className="text-[10px] font-bold text-gray-400 uppercase mb-1">Date</label>
-                            <input type="date" className="w-full p-3 border rounded-xl" value={formData.date} onChange={e=>setFormData({...formData, date: e.target.value})} />
+                            <input type="date" className="w-full p-3 border rounded-xl text-gray-900" value={formData.date} onChange={e=>setFormData({...formData, date: e.target.value})} />
                         </div>
                     </div>
 
                     <div>
                         <label className="text-[10px] font-bold text-gray-400 uppercase mb-1">Category</label>
-                        <select className="w-full p-3 border rounded-xl bg-gray-50" value={formData.category} onChange={e=>setFormData({...formData, category: e.target.value})}>
+                        {/* SELECT FIX: Forced White Background and Black Text */}
+                        <select 
+                            className="w-full p-3 border rounded-xl bg-white text-gray-900 font-bold border-gray-200 outline-none focus:ring-2 focus:ring-emerald-500" 
+                            value={formData.category} 
+                            onChange={e=>setFormData({...formData, category: e.target.value})}
+                        >
                             {(transaction.type === 'income' ? incomeCategories : expenseCategories).map(cat => (
-                                <option key={cat} value={cat}>{cat}</option>
+                                <option key={cat} value={cat} className="bg-white text-gray-900 font-medium">
+                                  {cat}
+                                </option>
                             ))}
                         </select>
                     </div>
 
                     <div className="pt-4 flex gap-3">
-                        <button onClick={onClose} className="flex-1 px-4 py-3 text-gray-500 font-bold hover:bg-gray-100 rounded-xl">Cancel</button>
-                        <button onClick={handleSave} className="flex-1 px-4 py-3 bg-emerald-900 text-white rounded-xl font-bold hover:bg-black shadow-lg">Update Record</button>
+                        <button onClick={onClose} className="flex-1 px-4 py-3 text-gray-500 font-bold hover:bg-gray-100 rounded-xl transition-colors">Cancel</button>
+                        <button onClick={handleSave} className="flex-1 px-4 py-3 bg-emerald-900 text-white rounded-xl font-bold hover:bg-black shadow-lg transition-all">Update Record</button>
                     </div>
                 </div>
             </div>
@@ -277,7 +296,7 @@ const TransactionsHub = ({ transactions, onUpdate, onDelete }) => {
     const profit = income - expenses;
 
     return (
-        <div className="space-y-6 animate-fade-in">
+        <div className="space-y-6 animate-fade-in text-gray-900">
             {editModal && <EditGeneralTransactionModal transaction={editModal} onClose={() => setEditModal(null)} onSave={onUpdate} />}
             
             <div className="flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-gray-100 gap-4">
@@ -291,7 +310,7 @@ const TransactionsHub = ({ transactions, onUpdate, onDelete }) => {
                         <span className="text-xs font-bold text-gray-500 uppercase">To</span>
                         <input type="date" value={endDate} onChange={e=>setEndDate(e.target.value)} className="bg-transparent text-sm outline-none font-bold text-gray-700" />
                     </div>
-                    <select value={filter} onChange={e=>setFilter(e.target.value)} className="p-2 border rounded-lg bg-gray-50 text-sm font-bold text-gray-700 focus:ring-2 focus:ring-emerald-500">
+                    <select value={filter} onChange={e=>setFilter(e.target.value)} className="p-2 border rounded-lg bg-white text-gray-900 text-sm font-bold focus:ring-2 focus:ring-emerald-500">
                         <option value="all">All Transactions</option>
                         <option value="income">Sales Only</option>
                         <option value="expense">Expenses Only</option>
@@ -338,8 +357,8 @@ const TransactionsHub = ({ transactions, onUpdate, onDelete }) => {
                                 </td>
                                 <td className="p-4 text-right no-print">
                                     <div className="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button onClick={() => setEditModal(t)} className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg"><Edit3 className="w-4 h-4"/></button>
-                                        <button onClick={() => onDelete(t.id)} className="p-2 text-red-400 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4"/></button>
+                                        <button onClick={() => setEditModal(t)} className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"><Edit3 className="w-4 h-4"/></button>
+                                        <button onClick={() => onDelete(t.id)} className="p-2 text-red-400 hover:bg-red-50 rounded-lg transition-colors"><Trash2 className="w-4 h-4"/></button>
                                     </div>
                                 </td>
                             </tr>
@@ -365,7 +384,7 @@ const ReceiptModal = ({ transaction, customer, onClose }) => {
             <h3 className="font-bold text-gray-700">Official Receipt</h3>
             <div className="flex gap-2">
                 <button onClick={()=>window.print()} className="bg-emerald-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-bold hover:bg-emerald-700 shadow-lg text-sm"><Download className="w-4 h-4"/> Download PDF</button>
-                <button onClick={onClose} className="bg-white text-gray-700 border border-gray-300 p-2 rounded-lg hover:bg-gray-50"><X className="w-5 h-5"/></button>
+                <button onClick={onClose} className="bg-white text-gray-700 border border-gray-300 p-2 rounded-lg hover:bg-gray-50 transition-colors"><X className="w-5 h-5"/></button>
             </div>
         </div>
         
@@ -435,7 +454,7 @@ const InvoiceModal = ({ transaction, customer, onClose }) => {
             <div className="flex gap-2">
                 <button onClick={handleEmail} className="bg-white text-gray-700 border border-gray-300 px-4 py-2 rounded-lg flex items-center gap-2 font-bold hover:bg-gray-50 shadow-sm text-sm"><Mail className="w-4 h-4"/> Email</button>
                 <button onClick={()=>window.print()} className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-bold hover:bg-blue-700 shadow-lg text-sm"><Download className="w-4 h-4"/> Download PDF</button>
-                <button onClick={onClose} className="bg-white text-gray-700 border border-gray-300 p-2 rounded-lg hover:bg-gray-50"><X className="w-5 h-5"/></button>
+                <button onClick={onClose} className="bg-white text-gray-700 border border-gray-300 p-2 rounded-lg hover:bg-gray-50 transition-colors"><X className="w-5 h-5"/></button>
             </div>
         </div>
         
@@ -520,13 +539,13 @@ const PaymentModal = ({ transaction, onClose, onUpdate }) => {
     };
 
     return (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm text-gray-900">
             <div className="bg-white p-8 rounded-2xl w-full max-w-sm shadow-2xl">
                 <h3 className="text-xl font-bold mb-4">Receive Payment</h3>
                 <p className="text-sm text-gray-500 mb-4">Invoice #{transaction.id.slice(0,6)} • Balance: <span className="font-bold text-red-600">GH₵{balance.toLocaleString()}</span></p>
-                <input type="number" autoFocus className="w-full p-4 border-2 border-emerald-100 rounded-xl text-2xl font-bold text-center text-emerald-900 mb-4 focus:border-emerald-500 outline-none" placeholder="0.00" value={amount} onChange={e=>setAmount(e.target.value)} />
-                <button onClick={handlePay} className="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-700">Confirm Payment</button>
-                <button onClick={onClose} className="w-full mt-2 text-gray-400 text-sm hover:text-gray-600">Cancel</button>
+                <input type="number" autoFocus className="w-full p-4 border-2 border-emerald-100 rounded-xl text-2xl font-bold text-center text-emerald-900 mb-4 focus:border-emerald-500 outline-none bg-white" placeholder="0.00" value={amount} onChange={e=>setAmount(e.target.value)} />
+                <button onClick={handlePay} className="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-700 transition-colors shadow-lg">Confirm Payment</button>
+                <button onClick={onClose} className="w-full mt-2 text-gray-400 text-sm hover:text-gray-600 transition-colors">Cancel</button>
             </div>
         </div>
     )
@@ -538,7 +557,7 @@ const ExpenseTerminal = ({ onSave }) => {
   const categories = ["Operational Expenses", "Utilities", "Fines", "Property", "Transportation", "Food & Water", "Salaries", "Maintenance", "Marketing", "Restocking", "Other"];
   
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden animate-fade-in flex flex-col md:flex-row border border-red-100">
+    <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden animate-fade-in flex flex-col md:flex-row border border-red-100 text-gray-900">
       <div className="bg-red-900 p-10 text-white md:w-2/5 flex flex-col justify-center">
         <div className="bg-white/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-sm">
             <CreditCard className="w-8 h-8 text-red-300" />
@@ -563,9 +582,9 @@ const ExpenseTerminal = ({ onSave }) => {
             </div>
             <div>
                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Category</label>
-                {/* IMPROVED SELECT BOX FOR CLARITY */}
+                {/* SELECT FIX: Hardcoded backgrounds and colors for visibility */}
                 <select 
-                    className="w-full p-4 border-2 border-gray-100 rounded-xl bg-white text-gray-800 font-bold focus:border-red-500 outline-none shadow-sm cursor-pointer" 
+                    className="w-full p-4 border-2 border-gray-100 rounded-xl bg-white text-gray-900 font-bold focus:border-red-500 outline-none shadow-sm cursor-pointer" 
                     value={expense.category} 
                     onChange={e=>setExpense({...expense, category: e.target.value})}
                 >
@@ -624,38 +643,38 @@ const InvoiceCreator = ({ customer, inventory, onSave, onCancel }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden animate-fade-in">
+    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden animate-fade-in text-gray-900">
         <div className="bg-gray-900 p-4 text-white flex justify-between items-center">
             <h3 className="font-bold flex items-center gap-2"><FileText className="w-5 h-5"/> New Invoice for {customer.name}</h3>
-            <button onClick={onCancel} className="bg-white/10 p-2 rounded hover:bg-white/20"><X className="w-4 h-4"/></button>
+            <button onClick={onCancel} className="bg-white/10 p-2 rounded hover:bg-white/20 transition-colors"><X className="w-4 h-4"/></button>
         </div>
         <div className="p-6">
             <div className="grid md:grid-cols-2 gap-4 mb-6">
-                <div><label className="text-xs font-bold text-gray-500 uppercase">Date</label><input type="date" className="w-full p-2 border rounded bg-gray-50" value={meta.date} onChange={e=>setMeta({...meta, date:e.target.value})} /></div>
-                <div><label className="text-xs font-bold text-gray-500 uppercase">Category</label><select className="w-full p-2 border rounded bg-gray-50" value={meta.category} onChange={e=>setMeta({...meta, category:e.target.value})}>{["Sales of Goods", "Sales of Service", "Proceeds", "Consultation Fee", "Installation", "Other Income"].map(c=><option key={c}>{c}</option>)}</select></div>
+                <div><label className="text-xs font-bold text-gray-500 uppercase">Date</label><input type="date" className="w-full p-2 border rounded bg-gray-50 text-gray-900" value={meta.date} onChange={e=>setMeta({...meta, date:e.target.value})} /></div>
+                <div><label className="text-xs font-bold text-gray-500 uppercase">Category</label><select className="w-full p-2 border rounded bg-white text-gray-900" value={meta.category} onChange={e=>setMeta({...meta, category:e.target.value})}>{["Sales of Goods", "Sales of Service", "Proceeds", "Consultation Fee", "Installation", "Other Income"].map(c=><option key={c} value={c}>{c}</option>)}</select></div>
             </div>
             <div className="space-y-2 mb-6">
                 <div className="flex text-xs font-bold text-gray-400 uppercase px-1"><span className="flex-1">Item</span><span className="w-16 text-center">Qty</span><span className="w-24 text-right">Price</span><span className="w-24 text-right">Total</span><span className="w-8"></span></div>
                 {lines.map((line) => (
                     <div key={line.id} className="flex gap-2 items-start">
                         <div className="flex-1"><SearchableSelect options={inventory} value={line.desc} onChange={(val)=>updateLine(line.id, 'desc', val)} onSelect={(p)=>handleProductSelect(line.id, p)} placeholder="Item..." /></div>
-                        <input type="number" className="w-16 p-2 border rounded text-center font-bold" value={line.qty} onChange={e=>updateLine(line.id, 'qty', parseFloat(e.target.value)||0)} />
-                        <input type="number" className="w-24 p-2 border rounded text-right font-bold" value={line.price} onChange={e=>updateLine(line.id, 'price', parseFloat(e.target.value)||0)} />
+                        <input type="number" className="w-16 p-2 border rounded text-center font-bold bg-white text-gray-900" value={line.qty} onChange={e=>updateLine(line.id, 'qty', parseFloat(e.target.value)||0)} />
+                        <input type="number" className="w-24 p-2 border rounded text-right font-bold bg-white text-gray-900" value={line.price} onChange={e=>updateLine(line.id, 'price', parseFloat(e.target.value)||0)} />
                         <div className="w-24 p-2 text-right font-bold text-gray-700 bg-gray-50 rounded">{(line.qty * line.price).toLocaleString()}</div>
-                        <button onClick={()=>setLines(lines.filter(l=>l.id!==line.id))} className="text-red-400 hover:text-red-600 p-2"><Trash2 className="w-4 h-4"/></button>
+                        <button onClick={()=>setLines(lines.filter(l=>l.id!==line.id))} className="text-red-400 hover:text-red-600 p-2 transition-colors"><Trash2 className="w-4 h-4"/></button>
                     </div>
                 ))}
-                <button onClick={()=>setLines([...lines, { id: Date.now(), desc: '', price: 0, qty: 1, inventoryId: null }])} className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 mt-2 p-2"><Plus className="w-3 h-3"/> Add Item</button>
+                <button onClick={()=>setLines([...lines, { id: Date.now(), desc: '', price: 0, qty: 1, inventoryId: null }])} className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 mt-2 p-2 transition-colors"><Plus className="w-3 h-3"/> Add Item</button>
             </div>
             <div className="flex justify-end border-t pt-4">
                 <div className="w-1/2 space-y-2 text-right">
                     <div className="flex justify-between text-xs text-gray-500"><span>Subtotal</span><span>GH₵{totals.subTotal.toLocaleString()}</span></div>
-                    <div className="flex justify-between items-center"><span className="text-xs text-emerald-600 font-bold uppercase">Discount %</span><input type="number" className="w-16 p-1 border rounded text-right text-xs" value={meta.discountRate} onChange={e=>setMeta({...meta, discountRate:e.target.value})}/></div>
-                    <div className="flex justify-between items-center"><span className="text-xs text-red-500 font-bold uppercase">Tax %</span><input type="number" className="w-16 p-1 border rounded text-right text-xs" value={meta.taxRate} onChange={e=>setMeta({...meta, taxRate:e.target.value})}/></div>
+                    <div className="flex justify-between items-center"><span className="text-xs text-emerald-600 font-bold uppercase">Discount %</span><input type="number" className="w-16 p-1 border rounded text-right text-xs bg-white text-gray-900" value={meta.discountRate} onChange={e=>setMeta({...meta, discountRate:e.target.value})}/></div>
+                    <div className="flex justify-between items-center"><span className="text-xs text-red-500 font-bold uppercase">Tax %</span><input type="number" className="w-16 p-1 border rounded text-right text-xs bg-white text-gray-900" value={meta.taxRate} onChange={e=>setMeta({...meta, taxRate:e.target.value})}/></div>
                     <div className="flex justify-between text-2xl font-bold text-gray-900 border-t pt-2"><span>Total</span><span>GH₵{totals.total.toLocaleString()}</span></div>
                 </div>
             </div>
-            <button onClick={handleSubmit} className="w-full mt-6 bg-gray-900 text-white font-bold py-4 rounded-xl hover:bg-black transition-all shadow-xl">Create Invoice</button>
+            <button onClick={handleSubmit} className="w-full mt-6 bg-gray-900 text-white font-bold py-4 rounded-xl hover:bg-black transition-all shadow-xl active:scale-95">Create Invoice</button>
         </div>
     </div>
   )
@@ -676,8 +695,8 @@ const CustomerPortal = ({ customer, transactions, inventory, onBack, onSaveTrans
     };
 
     return (
-        <div className="animate-fade-in">
-            <button onClick={onBack} className="mb-4 flex items-center gap-2 text-gray-500 hover:text-gray-800 font-bold"><ArrowLeft className="w-4 h-4"/> Back to Directory</button>
+        <div className="animate-fade-in text-gray-900">
+            <button onClick={onBack} className="mb-4 flex items-center gap-2 text-gray-500 hover:text-gray-800 font-bold transition-colors"><ArrowLeft className="w-4 h-4"/> Back to Directory</button>
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 mb-8">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
                     <div>
@@ -702,27 +721,29 @@ const CustomerPortal = ({ customer, transactions, inventory, onBack, onSaveTrans
 
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                 <div className="p-6 border-b flex justify-between items-center"><h3 className="font-bold text-gray-800">Transaction History</h3></div>
-                <table className="w-full text-left text-sm">
-                    <thead className="bg-gray-50 text-gray-500 font-bold uppercase"><tr><th className="p-4">Date</th><th className="p-4">Description</th><th className="p-4 text-right">Total</th><th className="p-4 text-right">Paid</th><th className="p-4 text-right">Balance</th><th className="p-4 text-center">Status</th><th className="p-4 text-center">Actions</th></tr></thead>
-                    <tbody className="divide-y">{custTransactions.map(t => {
-                        const bal = t.amount - (t.amountPaid || 0);
-                        return (
-                        <tr key={t.id} className="hover:bg-gray-50">
-                            <td className="p-4 text-gray-500">{t.date}</td>
-                            <td className="p-4 font-bold text-gray-800">{t.desc}</td>
-                            <td className="p-4 text-right font-bold text-gray-900">GH₵{t.amount.toLocaleString()}</td>
-                            <td className="p-4 text-right text-emerald-600 font-bold">GH₵{(t.amountPaid || 0).toLocaleString()}</td>
-                            <td className="p-4 text-right text-red-600 font-bold">GH₵{bal.toLocaleString()}</td>
-                            <td className="p-4 text-center"><span className={`px-2 py-1 rounded text-xs font-bold uppercase ${bal <= 0 ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>{bal <= 0 ? 'Paid' : 'Pending'}</span></td>
-                            <td className="p-4 flex justify-center gap-2">
-                                <button onClick={() => setPayModal(t)} className="p-2 text-emerald-600 hover:bg-emerald-50 rounded" title="Receive Payment"><Wallet className="w-4 h-4"/></button>
-                                <button onClick={() => setSelectedInv(t)} className="p-2 text-blue-600 hover:bg-blue-50 rounded" title="View Invoice"><FileText className="w-4 h-4"/></button>
-                                {(t.amountPaid > 0) && <button onClick={() => setSelectedReceipt(t)} className="p-2 text-purple-600 hover:bg-purple-50 rounded" title="View Receipt"><ClipboardCheck className="w-4 h-4"/></button>}
-                                <button onClick={() => handleShare(t, 'whatsapp')} className="p-2 text-green-600 hover:bg-green-50 rounded" title="Share Message"><Share2 className="w-4 h-4"/></button>
-                            </td>
-                        </tr>
-                    )})}</tbody>
-                </table>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left text-sm">
+                        <thead className="bg-gray-50 text-gray-500 font-bold uppercase"><tr><th className="p-4">Date</th><th className="p-4">Description</th><th className="p-4 text-right">Total</th><th className="p-4 text-right">Paid</th><th className="p-4 text-right">Balance</th><th className="p-4 text-center">Status</th><th className="p-4 text-center">Actions</th></tr></thead>
+                        <tbody className="divide-y">{custTransactions.map(t => {
+                            const bal = t.amount - (t.amountPaid || 0);
+                            return (
+                            <tr key={t.id} className="hover:bg-gray-50 transition-colors">
+                                <td className="p-4 text-gray-500 font-medium">{t.date}</td>
+                                <td className="p-4 font-bold text-gray-800">{t.desc}</td>
+                                <td className="p-4 text-right font-bold text-gray-900">GH₵{t.amount.toLocaleString()}</td>
+                                <td className="p-4 text-right text-emerald-600">GH₵{(t.amountPaid || 0).toLocaleString()}</td>
+                                <td className="p-4 text-right text-red-600 font-bold">GH₵{bal.toLocaleString()}</td>
+                                <td className="p-4 text-center"><span className={`px-2 py-1 rounded text-xs font-bold uppercase ${bal <= 0 ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>{bal <= 0 ? 'Paid' : 'Pending'}</span></td>
+                                <td className="p-4 flex justify-center gap-2">
+                                    <button onClick={() => setPayModal(t)} className="p-2 text-emerald-600 hover:bg-emerald-50 rounded transition-colors" title="Receive Payment"><Wallet className="w-4 h-4"/></button>
+                                    <button onClick={() => setSelectedInv(t)} className="p-2 text-blue-600 hover:bg-blue-50 rounded transition-colors" title="View Invoice"><FileText className="w-4 h-4"/></button>
+                                    {(t.amountPaid > 0) && <button onClick={() => setSelectedReceipt(t)} className="p-2 text-purple-600 hover:bg-purple-50 rounded transition-colors" title="View Receipt"><ClipboardCheck className="w-4 h-4"/></button>}
+                                    <button onClick={() => handleShare(t, 'whatsapp')} className="p-2 text-green-600 hover:bg-green-50 rounded transition-colors" title="Share Message"><Share2 className="w-4 h-4"/></button>
+                                </td>
+                            </tr>
+                        )})}</tbody>
+                    </table>
+                </div>
             </div>
             
             {selectedInv && <InvoiceModal transaction={selectedInv} customer={customer} onClose={()=>setSelectedInv(null)} />}
@@ -742,17 +763,17 @@ const CustomerDirectory = ({ db, customers, transactions, inventory, onSaveTrans
   if (selectedCust) { return <CustomerPortal customer={selectedCust} transactions={transactions} inventory={inventory} onBack={()=>setSelectedCust(null)} onSaveTransaction={onSaveTransaction} onUpdateTransaction={onUpdateTransaction} />; }
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in text-gray-900">
       <div className="flex justify-between items-center mb-8"><h2 className="text-3xl font-bold text-gray-800 tracking-tight">Customer Directory</h2><button onClick={() => setShowAdd(!showAdd)} className="bg-gray-900 text-white px-5 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-black transition-all active:scale-95 shadow-xl">{showAdd ? 'Cancel' : 'Add New Client'}</button></div>
       {showAdd && (
           <div className="bg-white p-8 rounded-3xl shadow-2xl border border-gray-100 mb-8 animate-fade-in-up">
               <h3 className="font-bold text-xl mb-6 text-gray-800 flex items-center gap-2"><User className="text-emerald-600"/> Create New Customer Profile</h3>
               <form onSubmit={addCustomer} className="grid md:grid-cols-2 gap-6">
-                  <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Full Name</label><input required placeholder="e.g. Samuel Adama" className="w-full p-4 border border-gray-100 rounded-xl bg-gray-50 focus:bg-white transition-all outline-none focus:ring-2 focus:ring-emerald-500" value={newCust.name} onChange={e=>setNewCust({...newCust, name: e.target.value})} /></div>
-                  <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Company Name</label><input placeholder="e.g. Green Corp" className="w-full p-4 border border-gray-100 rounded-xl bg-gray-50 focus:bg-white transition-all outline-none focus:ring-2 focus:ring-emerald-500" value={newCust.company} onChange={e=>setNewCust({...newCust, company: e.target.value})} /></div>
-                  <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Phone Number</label><input required placeholder="055 123 4567" className="w-full p-4 border border-gray-100 rounded-xl bg-gray-50 focus:bg-white transition-all outline-none focus:ring-2 focus:ring-emerald-500" value={newCust.phone} onChange={e=>setNewCust({...newCust, phone: e.target.value})} /></div>
-                  <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Email Address</label><input placeholder="customer@mail.com" className="w-full p-4 border border-gray-100 rounded-xl bg-gray-50 focus:bg-white transition-all outline-none focus:ring-2 focus:ring-emerald-500" value={newCust.email} onChange={e=>setNewCust({...newCust, email: e.target.value})} /></div>
-                  <div className="md:col-span-2"><label className="text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Physical Address</label><textarea placeholder="Location, Street details..." className="w-full p-4 border border-gray-100 rounded-xl bg-gray-50 focus:bg-white transition-all h-24 resize-none outline-none focus:ring-2 focus:ring-emerald-500" value={newCust.address} onChange={e=>setNewCust({...newCust, address: e.target.value})} /></div>
+                  <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Full Name</label><input required placeholder="e.g. Samuel Adama" className="w-full p-4 border border-gray-100 rounded-xl bg-gray-50 text-gray-900 focus:bg-white transition-all outline-none focus:ring-2 focus:ring-emerald-500" value={newCust.name} onChange={e=>setNewCust({...newCust, name: e.target.value})} /></div>
+                  <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Company Name</label><input placeholder="e.g. Green Corp" className="w-full p-4 border border-gray-100 rounded-xl bg-gray-50 text-gray-900 focus:bg-white transition-all outline-none focus:ring-2 focus:ring-emerald-500" value={newCust.company} onChange={e=>setNewCust({...newCust, company: e.target.value})} /></div>
+                  <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Phone Number</label><input required placeholder="055 123 4567" className="w-full p-4 border border-gray-100 rounded-xl bg-gray-50 text-gray-900 focus:bg-white transition-all outline-none focus:ring-2 focus:ring-emerald-500" value={newCust.phone} onChange={e=>setNewCust({...newCust, phone: e.target.value})} /></div>
+                  <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Email Address</label><input placeholder="customer@mail.com" className="w-full p-4 border border-gray-100 rounded-xl bg-gray-50 text-gray-900 focus:bg-white transition-all outline-none focus:ring-2 focus:ring-emerald-500" value={newCust.email} onChange={e=>setNewCust({...newCust, email: e.target.value})} /></div>
+                  <div className="md:col-span-2"><label className="text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Physical Address</label><textarea placeholder="Location, Street details..." className="w-full p-4 border border-gray-100 rounded-xl bg-gray-50 text-gray-900 focus:bg-white transition-all h-24 resize-none outline-none focus:ring-2 focus:ring-emerald-500" value={newCust.address} onChange={e=>setNewCust({...newCust, address: e.target.value})} /></div>
                   <button className="md:col-span-2 bg-emerald-600 text-white font-bold py-4 rounded-xl hover:bg-emerald-700 shadow-lg shadow-emerald-100 transition-all active:scale-95 text-lg">Save Client Profile</button>
               </form>
           </div>
@@ -788,7 +809,7 @@ const InventoryManager = ({ db }) => {
   useEffect(() => { const unsub = onSnapshot(collection(db, 'plants'), (snap) => setInventory(snap.docs.map(d => ({id: d.id, ...d.data()})))); return () => unsub(); }, [db]);
   const updateStock = async (id, current, change) => { const n = (current || 0) + change; if(n < 0) return; await updateDoc(doc(db, 'plants', id), { stock: n }); };
   return (
-    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 animate-fade-in">
+    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 animate-fade-in text-gray-900">
         <h3 className="font-bold text-2xl mb-8 flex items-center gap-3 text-emerald-950 tracking-tight"><Package className="w-8 h-8 text-emerald-600"/> Warehouse & Live Inventory</h3>
         <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
@@ -823,18 +844,18 @@ const Dashboard = ({ transactions, customers }) => {
   const totalExpense = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-8 animate-fade-in text-gray-900">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="bg-white p-7 rounded-3xl shadow-sm border border-gray-100"><p className="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-2">Total Sales (Gross)</p><h3 className="text-3xl font-black text-gray-900 tracking-tighter">GH₵{totalIncome.toLocaleString()}</h3><div className="mt-2 h-1 w-12 bg-emerald-500 rounded-full"></div></div>
             <div className="bg-white p-7 rounded-3xl shadow-sm border border-gray-100"><p className="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-2">Net Cash (Collected)</p><h3 className="text-3xl font-black text-blue-900 tracking-tighter">GH₵{totalPaid.toLocaleString()}</h3><div className="mt-2 h-1 w-12 bg-blue-500 rounded-full"></div></div>
             <div className="bg-white p-7 rounded-3xl shadow-sm border border-gray-100"><p className="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-2">Debts (Receivable)</p><h3 className="text-3xl font-black text-red-600 tracking-tighter">GH₵{pending.toLocaleString()}</h3><div className="mt-2 h-1 w-12 bg-red-500 rounded-full"></div></div>
-            <div className="bg-gray-900 p-7 rounded-3xl shadow-2xl"><p className="text-emerald-400 text-[10px] font-black uppercase tracking-widest mb-2">Operating Expenses</p><h3 className="text-3xl font-black text-white tracking-tighter">GH₵{totalExpense.toLocaleString()}</h3><div className="mt-2 h-1 w-12 bg-white/20 rounded-full"></div></div>
+            <div className="bg-gray-900 p-7 rounded-3xl shadow-2xl text-white"><p className="text-emerald-400 text-[10px] font-black uppercase tracking-widest mb-2">Operating Expenses</p><h3 className="text-3xl font-black text-white tracking-tighter">GH₵{totalExpense.toLocaleString()}</h3><div className="mt-2 h-1 w-12 bg-white/20 rounded-full"></div></div>
         </div>
         
         <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="flex justify-between items-center mb-6">
                 <h3 className="font-bold text-xl text-gray-900 tracking-tight flex items-center gap-2"><AlertCircle className="text-red-500"/> Critical Pending Invoices</h3>
-                <span className="text-[10px] font-bold bg-red-50 text-red-600 px-3 py-1 rounded-full uppercase">Action Required</span>
+                <span className="text-[10px] font-bold bg-red-50 text-red-600 px-3 py-1 rounded-full uppercase tracking-tighter">Action Required</span>
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
@@ -942,13 +963,13 @@ const BookkeepingSystem = ({ db, onExit }) => {
   const handleDeleteCustomer = async (id) => { if(confirm('Deleting customer will not delete their invoices. Continue?')) await deleteDoc(doc(db, 'customers', id)); };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row font-sans selection:bg-emerald-100 selection:text-emerald-900">
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row font-sans selection:bg-emerald-100 selection:text-emerald-900 text-gray-900">
       <PrintStyles />
       <div className="md:w-72 bg-gradient-to-b from-emerald-900 to-emerald-950 text-white p-6 flex flex-col justify-between print:hidden shadow-2xl relative overflow-hidden no-print">
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-12">
             <div className="bg-white/10 p-2 rounded-2xl backdrop-blur-sm shadow-xl border border-white/10"><DollarSign className="w-8 h-8 text-emerald-300"/></div>
-            <div><h1 className="font-black text-2xl tracking-tighter">NEXUS</h1><p className="text-emerald-400 text-[9px] font-black tracking-[0.2em] uppercase">Finance OS</p></div>
+            <div><h1 className="font-black text-2xl tracking-tighter text-white">NEXUS</h1><p className="text-emerald-400 text-[9px] font-black tracking-[0.2em] uppercase">Finance OS</p></div>
           </div>
         
           <nav className="space-y-1">
