@@ -3,12 +3,17 @@ import React from 'react';
 import { Sprout, Users, Heart, Award, Quote, Leaf } from 'lucide-react';
 
 const AboutView = ({ workers, aboutData }) => {
-  // Safe Defaults
-  const founderName = aboutData?.founderName || "The Founder";
-  const founderRole = aboutData?.founderRole || "Visionary & Lead Horticulturalist";
-  const storyTitle = aboutData?.storyTitle || "From a Seed to a Sanctuary";
+  // --- DYNAMIC DATA SYNC ---
+  // If aboutData exists in Firestore, we use it. 
+  // If not, we fall back to these professional defaults.
+  const founderName = aboutData?.founderName || "Rosaline";
+  const founderRole = aboutData?.founderRole || "Managing Director";
+  const storyTitle = aboutData?.storyTitle || "Under Our Roots";
   const storyText = aboutData?.storyText || "Green Gold Gardens started with a simple belief: nature is not just a decoration, but a necessity. What began as a small backyard project has grown into Accra's premier botanical haven.";
-  const founderImage = aboutData?.founderImage || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80";
+  
+  // This is the specific line we are fixing. 
+  // It checks aboutData.founderImage first.
+  const founderImage = aboutData?.founderImage || "https://images.unsplash.com/photo-1530836361283-9972f707061f?auto=format&fit=crop&q=80";
 
   return (
     <div className="min-h-screen bg-stone-50 pt-20 font-sans overflow-x-hidden">
@@ -41,14 +46,15 @@ const AboutView = ({ workers, aboutData }) => {
             
             {/* Image Side */}
             <div className="relative order-2 lg:order-1">
-                {/* Organic Frame */}
+                {/* Organic Frames */}
                 <div className="absolute inset-0 bg-[var(--color-primary)] rounded-[3rem] rotate-3 transform scale-105 opacity-10"></div>
                 <div className="absolute inset-0 bg-[var(--color-secondary)] rounded-[3rem] -rotate-2 transform scale-105 opacity-10"></div>
                 
+                {/* The Main Photo */}
                 <img 
                     src={founderImage} 
                     alt={founderName} 
-                    className="relative z-10 w-full h-[600px] object-cover rounded-[2.5rem] shadow-2xl"
+                    className="relative z-10 w-full h-[600px] object-cover rounded-[2.5rem] shadow-2xl border-4 border-white"
                 />
                 
                 {/* Quote Card */}
@@ -73,7 +79,7 @@ const AboutView = ({ workers, aboutData }) => {
 
                 <div className="flex items-center gap-4 pt-4">
                     <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-[var(--color-primary)] font-bold text-xl border-2 border-white shadow-sm">
-                        {founderName[0]}
+                        {founderName ? founderName[0] : "R"}
                     </div>
                     <div>
                         <p className="font-bold text-gray-900 text-lg">{founderName}</p>

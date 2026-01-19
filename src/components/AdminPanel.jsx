@@ -860,51 +860,116 @@ const AdminPanel = ({ user, role, db, storage, plants, gallery, workers, onLaunc
 
           {/* ================= CONTENT (ABOUT) TAB ================= */}
           {activeAdminTab === 'content' && canEditContent && (
-            <div className="max-w-4xl mx-auto bg-white p-10 rounded-3xl shadow-sm border border-gray-100 animate-fade-in">
-                <div className="text-center mb-10">
-                   <h3 className="text-3xl font-bold text-slate-800">Edit "Our Roots" Page</h3>
-                   <p className="text-gray-500 mt-2">Manage the founder story and image shown to customers.</p>
-                </div>
-                
-                <div className="grid md:grid-cols-12 gap-10">
-                   <div className="md:col-span-4">
-                      <label className="block text-xs font-bold text-gray-500 uppercase mb-3">Founder Image</label>
-                      <div className="border-2 border-dashed border-gray-300 rounded-3xl bg-gray-50 h-80 flex items-center justify-center relative hover:bg-gray-100 transition-colors group cursor-pointer overflow-hidden">
-                        {aboutForm.founderImage ? (
-                            <img src={aboutForm.founderImage} className="h-full w-full object-cover" alt="Founder" />
-                        ) : (
-                            <div className="text-gray-400 text-center"><Upload className="w-10 h-10 mx-auto mb-2"/><p>Upload Photo</p></div>
-                        )}
-                        <input type="file" onChange={handleAboutImg} className="absolute inset-0 opacity-0 cursor-pointer"/>
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <p className="text-white font-bold">Change Photo</p>
+    <div className="max-w-4xl mx-auto bg-white p-10 rounded-3xl shadow-sm border border-gray-100 animate-fade-in">
+        <div className="text-center mb-10">
+            <h3 className="text-3xl font-bold text-slate-800 tracking-tight">Edit "Our Roots" Page</h3>
+            <p className="text-gray-500 mt-2">Manage Rosaline's story and profile image shown on the website.</p>
+        </div>
+        
+        <div className="grid md:grid-cols-12 gap-10">
+            {/* --- IMAGE UPLOAD SIDE --- */}
+            <div className="md:col-span-4">
+                <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Founder Profile Photo</label>
+                <div className="border-2 border-dashed border-emerald-100 rounded-[2.5rem] bg-stone-50 h-96 flex items-center justify-center relative hover:border-emerald-500 hover:bg-emerald-50 transition-all group cursor-pointer overflow-hidden shadow-inner">
+                    
+                    {aboutForm.founderImage ? (
+                        <div className="relative w-full h-full">
+                            <img 
+                                src={aboutForm.founderImage} 
+                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                alt="Rosaline" 
+                            />
+                            {/* Success Overlay */}
+                            <div className="absolute top-4 right-4 bg-emerald-500 text-white p-1.5 rounded-full shadow-lg">
+                                <CheckCircle className="w-4 h-4" />
+                            </div>
                         </div>
-                      </div>
-                   </div>
-                   <div className="md:col-span-8 space-y-6">
-                      <div className="grid grid-cols-2 gap-6">
-                         <div>
-                             <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Founder Name</label>
-                             <input className="w-full p-4 border border-gray-200 rounded-xl" placeholder="Name" value={aboutForm.founderName} onChange={e=>setAboutForm({...aboutForm, founderName:e.target.value})} />
-                         </div>
-                         <div>
-                             <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Role Title</label>
-                             <input className="w-full p-4 border border-gray-200 rounded-xl" placeholder="Role" value={aboutForm.founderRole} onChange={e=>setAboutForm({...aboutForm, founderRole:e.target.value})} />
-                         </div>
-                      </div>
-                      <div>
-                          <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Story Title</label>
-                          <input className="w-full p-4 border border-gray-200 rounded-xl font-bold text-lg" placeholder="Story Title" value={aboutForm.storyTitle} onChange={e=>setAboutForm({...aboutForm, storyTitle:e.target.value})} />
-                      </div>
-                      <div>
-                          <label className="block text-xs font-bold text-gray-500 uppercase mb-2">The Story</label>
-                          <textarea className="w-full p-4 border border-gray-200 rounded-xl h-48 resize-none leading-relaxed text-gray-600" placeholder="Write the story here..." value={aboutForm.storyText} onChange={e=>setAboutForm({...aboutForm, storyText:e.target.value})} />
-                      </div>
-                      <button onClick={handleAboutSave} className="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all flex items-center justify-center gap-2"><Save className="w-5 h-5"/> Save Content Changes</button>
-                   </div>
+                    ) : (
+                        <div className="text-gray-400 text-center p-6">
+                            <div className="bg-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+                                <Upload className="w-8 h-8 text-emerald-600"/>
+                            </div>
+                            <p className="font-bold text-sm text-gray-500">Upload Professional <br/>Portrait</p>
+                            <p className="text-[10px] text-gray-400 mt-2 uppercase tracking-tighter">JPG, PNG (Max 5MB)</p>
+                        </div>
+                    )}
+
+                    {/* Hidden Input Layer */}
+                    <input 
+                        type="file" 
+                        accept="image/*"
+                        onChange={handleAboutImg} 
+                        className="absolute inset-0 opacity-0 cursor-pointer z-20"
+                    />
+
+                    {/* Hover State Label */}
+                    <div className="absolute inset-0 bg-emerald-900/60 backdrop-blur-sm flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10">
+                        <Upload className="w-8 h-8 text-white mb-2 animate-bounce" />
+                        <p className="text-white font-bold text-sm uppercase tracking-wider">Replace Photo</p>
+                    </div>
+                </div>
+                <p className="text-[10px] text-center text-gray-400 mt-4 italic">Recommended: High-resolution vertical portrait</p>
+            </div>
+
+            {/* --- TEXT CONTENT SIDE --- */}
+            <div className="md:col-span-8 space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-[10px] font-bold text-emerald-800 uppercase tracking-widest mb-2 ml-1">Founder Name</label>
+                        <input 
+                            className="w-full p-4 border border-gray-100 rounded-2xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all font-medium" 
+                            placeholder="Rosaline" 
+                            value={aboutForm.founderName} 
+                            onChange={e=>setAboutForm({...aboutForm, founderName:e.target.value})} 
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-[10px] font-bold text-emerald-800 uppercase tracking-widest mb-2 ml-1">Professional Title</label>
+                        <input 
+                            className="w-full p-4 border border-gray-100 rounded-2xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all font-medium" 
+                            placeholder="Managing Director" 
+                            value={aboutForm.founderRole} 
+                            onChange={e=>setAboutForm({...aboutForm, founderRole:e.target.value})} 
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <label className="block text-[10px] font-bold text-emerald-800 uppercase tracking-widest mb-2 ml-1">Story Heading</label>
+                    <input 
+                        className="w-full p-4 border border-gray-100 rounded-2xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all font-bold text-lg text-slate-800" 
+                        placeholder="Under Our Roots" 
+                        value={aboutForm.storyTitle} 
+                        onChange={e=>setAboutForm({...aboutForm, storyTitle:e.target.value})} 
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-[10px] font-bold text-emerald-800 uppercase tracking-widest mb-2 ml-1">The Narrative (Story)</label>
+                    <textarea 
+                        className="w-full p-4 border border-gray-100 rounded-2xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all h-56 resize-none leading-relaxed text-gray-600 text-sm" 
+                        placeholder="Describe the journey and vision of Under Our Roots..." 
+                        value={aboutForm.storyText} 
+                        onChange={e=>setAboutForm({...aboutForm, storyText:e.target.value})} 
+                    />
+                </div>
+
+                <div className="pt-4">
+                    <button 
+                        onClick={handleAboutSave} 
+                        className="w-full bg-emerald-900 text-white font-bold py-5 rounded-2xl hover:bg-black shadow-xl shadow-emerald-100 transition-all flex items-center justify-center gap-3 transform active:scale-95 group"
+                    >
+                        <Save className="w-5 h-5 group-hover:rotate-12 transition-transform"/> 
+                        Publish Changes to Website
+                    </button>
+                    <p className="text-center text-[10px] text-gray-400 mt-4 uppercase tracking-tighter">
+                        Changes will be visible to all visitors immediately after saving.
+                    </p>
                 </div>
             </div>
-          )}
+        </div>
+    </div>
+)}
 
           {/* ================= GALLERY TAB ================= */}
           {activeAdminTab === 'gallery' && canEditContent && (
